@@ -1,7 +1,7 @@
 # aws-eks-notes
 Quick notes for AWS EKS
 
-## EKS?
+## EKS Overview
 Managed Kubernetes PaaS from AWS. EKS manages the control plane and you get integrations with others services. 
 
 | DIY | Tools  | EKS  |
@@ -68,5 +68,15 @@ Services determine load balancing and route traffic to pods. Typically apps can 
 ### Configuration and Secrets
 ConfigMaps can be used to provide the configuration for containers in different enviroments (dev,stage,prod). These values can be strings or entire files. ConfigMaps are stored in etcd and exposed to containers as envionment variables or files mounted in a volume. 
 
-To pass secrcets you can use a Kubernetes Secret. The difference is that they are encrypted and only ever store in memory. (If exposing as a file mounted in a volume the secret is mounted in RAM via tmpfs. 
+To pass secrcets you can use a Kubernetes Secret. The difference is that they are encrypted and only ever store in memory. If exposing as a file mounted in a volume the secret is mounted in RAM via tmpfs. 
+
+## Lets Run EKS
+
+### VPC Considerations
+
+VPC Design: [best practice, production grade 3 tier VPC](https://gruntwork.io/guides/networking/how-to-deploy-production-grade-vpc-aws)
+
+EKS uses tags on the VPC and subnets to know where to deploy Ec2 nodes and load balancers. [Cluster VPC Considerations](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html
+
+EKS can also use private API endpoints within the VPC. If you are using a peering configuration, you'll want to setup DNS forwarding via a Route53 Resolver, using VPC DNS resolution (in both peered VPCs). 
 
